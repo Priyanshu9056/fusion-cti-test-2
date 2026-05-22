@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fusion CTI Dummy Toolbar</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f4f5f7; 
+            margin: 0; 
+            padding: 10px; 
+        }
+        .toolbar-container { 
+            background: #ffffff; 
+            border: 1px solid #dcdcdc; 
+            padding: 15px; 
+            border-radius: 4px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+        }
+        h3 { margin-top: 0; color: #161514; font-size: 16px; }
+        .log-box { 
+            background: #1e1e1e; 
+            color: #4af626; 
+            padding: 10px; 
+            font-family: monospace; 
+            font-size: 12px;
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            margin-top: 10px; 
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar-container">
+        <h3>CTI Toolbar Active</h3>
+        <p style="font-size: 13px; color: #555;">If this is rendering inside Oracle Fusion, the iframe integration is successful.</p>
+        <strong style="font-size: 14px;">Inbound Fusion Parameters:</strong>
+        <div class="log-box" id="paramLog">Listening for Oracle Fusion parameters...</div>
+    </div>
+
+    <script>
+        // Extract the query parameters Oracle Fusion appends to the iframe URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const logBox = document.getElementById('paramLog');
+        
+        if (Array.from(urlParams).length === 0) {
+            logBox.textContent = "No parameters detected. Load this URL inside the Oracle Fusion UI.";
+        } else {
+            let paramString = "";
+            for (const [key, value] of urlParams) {
+                // Decode the URI components so URLs are readable
+                paramString += `${key} = ${decodeURIComponent(value)}\n\n`;
+            }
+            logBox.textContent = paramString;
+        }
+    </script>
+</body>
+</html>
+
